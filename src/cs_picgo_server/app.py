@@ -35,6 +35,7 @@ def run_action(uploader_name, filepath):
         uploader.do(filepath)
         remote_url = uploader.result.remote_url
         logger.info(f'remote_url is {remote_url}')
+        logger.info(f'uploader.results is {uploader.results}')
         return remote_url
 
 
