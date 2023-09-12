@@ -34,11 +34,13 @@ cs-picgo-server
 ===============
 
 
-    Add a short description here!
+    pypicgo的api封装
 
+   pip install git+https://gitee.com/supernatural-fork/cs-picgo-server.git
 
-A longer description of your project goes here...
+   pip install git+https://github.com/supernatural-fork/cs-picgo-server.git
 
+   use cs-picgo-server to start
 
 .. _pyscaffold-notes:
 
