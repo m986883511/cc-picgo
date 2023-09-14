@@ -29,6 +29,7 @@ def run_action(uploader_name, filepath):
     uploader = settings.uploader_class
     uploader_config = settings.uploader_config
     plugins = settings.plugins
+    CommonUploader.results = []
     with create_uploader(uploader, uploader_config, plugins) as uploader:
         logger.info('upload start')
         logger.info(f'upload file [{filepath}]')
