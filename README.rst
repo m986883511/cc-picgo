@@ -46,35 +46,35 @@ cs-picgo-server
 
 .. code-block:: yaml
 
-default: # 默认配置
-  uploader: gitee # 默认图床
-  plugins: # 全局插件
-    - module: pypicgo.plugins.rename.ReNamePlugin # 图床插件加载地址
-      config:
-        format: cs-{date}-{filename}
-    - module: pypicgo.plugins.compress.CompressPlugin
-    - module: pypicgo.plugins.notify.NotifyPlugin
+   default: # 默认配置
+     uploader: gitee # 默认图床
+     plugins: # 全局插件
+       - module: pypicgo.plugins.rename.ReNamePlugin # 图床插件加载地址
+         config:
+           format: cs-{date}-{filename}
+       - module: pypicgo.plugins.compress.CompressPlugin
+       - module: pypicgo.plugins.notify.NotifyPlugin
 
-uploaders: # 可用图床
-  gitee: # gitee 图床配置
-    module: pypicgo.uploaders.gitee.uploader.GiteeUploader
-    config:
-      domain: https://gitee.com
-      owner: m986883511
-      repo: picture-bed
-      img_path: PyPicGo
-      access_token: ***************************************
-    plugins:
-  github: # github图床配置
-    module: pypicgo.uploaders.github.uploader.GithubUploader
-    config:
-      domain: https://api.github.com
-      owner: xxx
-      repo: xxx
-      img_path: xxx
-      oauth_token: xxx
-    plugins: # github 图床私有插件
-      - module: pypicgo.plugins.jsdelivr.JsDelivrPlugin
+   uploaders: # 可用图床
+     gitee: # gitee 图床配置
+       module: pypicgo.uploaders.gitee.uploader.GiteeUploader
+       config:
+         domain: https://gitee.com
+         owner: m986883511
+         repo: picture-bed
+         img_path: PyPicGo
+         access_token: ***************************************
+       plugins:
+     github: # github图床配置
+       module: pypicgo.uploaders.github.uploader.GithubUploader
+       config:
+         domain: https://api.github.com
+         owner: xxx
+         repo: xxx
+         img_path: xxx
+         oauth_token: xxx
+       plugins: # github 图床私有插件
+         - module: pypicgo.plugins.jsdelivr.JsDelivrPlugin
 
 
 .. _pyscaffold-notes:
