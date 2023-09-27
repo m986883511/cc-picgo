@@ -1,10 +1,11 @@
+import subprocess
 import webbrowser
 
 import pystray
 from PIL import Image, ImageDraw
 from pystray import MenuItem, Menu, Icon
 
-from cs_picgo_server.app import logger, Backend
+from cs_picgo_server.app import logger, Backend, BASE_DIR
 
 
 class TaskBar:
@@ -25,6 +26,10 @@ class TaskBar:
     def notify(self, msg):
         self.icon.notify(msg, self.exe_name)
 
+    def open_dir(self):
+        logger.info(f'open dir {BASE_DIR}')
+        subprocess.Popen(f'explorer "{BASE_DIR}"')
+
     @staticmethod
     def create_image(width=64, height=64, color1='black', color2='white'):
         # Generate an image and draw a pattern
@@ -37,6 +42,7 @@ class TaskBar:
     def get_menu(self):
         menu = (
             MenuItem(text='项目主页', action=self.main_page),
+            MenuItem(text='配置目录', action=self.open_dir),
             Menu.SEPARATOR,
             MenuItem(text='退出程序', action=self.on_exit),
         )

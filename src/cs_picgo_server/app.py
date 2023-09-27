@@ -3,6 +3,7 @@ import os
 import shutil
 import threading
 import time
+import traceback
 
 from PIL import ImageGrab
 from PIL.PngImagePlugin import PngImageFile
@@ -34,14 +35,18 @@ def run_action(uploader_name, filepath):
     uploader_config = settings.uploader_config
     plugins = settings.plugins
     CommonUploader.results = []
-    with create_uploader(uploader, uploader_config, plugins) as uploader:
-        logger.info('upload start')
-        logger.info(f'upload file [{filepath}]')
-        uploader.do(filepath)
-        remote_url = uploader.result.remote_url
-        logger.info(f'remote_url is {remote_url}')
-        logger.info(f'uploader.results is {uploader.results}')
-        return remote_url
+    try:
+        with create_uploader(uploader, uploader_config, plugins) as uploader:
+            logger.info('upload start')
+            logger.info(f'upload file [{filepath}]')
+            uploader.do(filepath)
+            remote_url = uploader.result.remote_url
+            logger.info(f'remote_url is {remote_url}')
+            logger.info(f'uploader.results is {uploader.results}')
+            return remote_url
+    except Exception as e:
+        logger.error(f'have error, err={str(e)}')
+        logger.error(traceback.format_exc())
 
 
 def copy_image(src):
@@ -72,6 +77,7 @@ def upload():
 
     remote_url = run_action('gitee', path)
     data = {'success': True, 'result': remote_url}
+    logger.info(f'return request.body is {data}')
     return json.dumps(data, ensure_ascii=False)
 
 

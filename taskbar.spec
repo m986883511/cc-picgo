@@ -6,7 +6,14 @@ a = Analysis(
     pathex=[],
     binaries=[],
     datas=[],
-    hiddenimports=['pypicgo.uploaders.gitee.uploader', 'pypicgo.uploaders.github.uploader'],
+    hiddenimports=[
+        'pypicgo.uploaders.gitee.uploader',
+        'pypicgo.uploaders.github.uploader',
+        'pypicgo.plugins.notify',
+        'pypicgo.plugins.rename',
+        'pypicgo.plugins.typora',
+        'pypicgo.plugins.compress'
+    ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
