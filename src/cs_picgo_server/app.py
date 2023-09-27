@@ -1,6 +1,8 @@
 import json
 import os
 import shutil
+import threading
+import time
 
 from PIL import ImageGrab
 from PIL.PngImagePlugin import PngImageFile
@@ -10,6 +12,8 @@ from pypicgo.core.config import Settings
 from pypicgo.core.execute import create_uploader
 from pypicgo.core.logger import logger
 from pypicgo import BASE_DIR
+
+from cs_picgo_server import utils
 
 app = Flask(__name__)
 
@@ -71,9 +75,25 @@ def upload():
     return json.dumps(data, ensure_ascii=False)
 
 
-def main():
-    app.run(debug=True, port=36677)
+class Backend(threading.Thread):
+    def __init__(self, hook=None):
+        super().__init__()
+        self.hook = hook or logger.info
+        self.wait_to_start_time = 3
+
+    def run(self) -> None:
+        port = 36677
+        test_result = utils.test_bind_port(port)
+        logger.info(f'wait {self.wait_to_start_time} seconds to start')
+        time.sleep(self.wait_to_start_time)
+        if test_result:
+            self.hook(f'start success')
+            app.run(debug=True, port=port, use_reloader=False)
+        else:
+            while True:
+                self.hook(f'start failed, bind port={port} failed')
+                time.sleep(30)
 
 
 if __name__ == '__main__':
-    main()
+    Backend().start()
